@@ -1,6 +1,5 @@
 # Default to EL8 builds (testing al8 build)
-ARG IMAGE_BASE=quay.io/almalinux/almalinux:8
-
+ARG IMAGE_BASE=quay.io/centos/centos:stream8
 FROM $IMAGE_BASE
 
 ARG EL_VER=8

@@ -42,7 +42,7 @@ jobs:
         tags=()
         for registry in hub.opensciencegrid.org docker.io; do
           tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO-el$EL_VER )
-          if [[ $EL_VER == '8' ]]; then
+          if [[ $EL_VER == 'al8' ]]; then
             tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
             if [[ $BASE_YUM_REPO == 'release' ]]; then
               tags+=( $registry/$docker_repo:$OSG_RELEASE )
