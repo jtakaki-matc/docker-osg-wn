@@ -1,8 +1,8 @@
 # Default to EL8 builds 
-ARG IMAGE_BASE=quay.io/centos/centos:stream8
+ARG IMAGE_BASE=docker.io/centos:centos7
 FROM $IMAGE_BASE
 
-ARG OS_VER=EL8
+ARG OS_VER=EL7
 ARG OSG_RELEASE=3.6
 ARG BASE_YUM_REPO=release
 ARG BUILDDATE
