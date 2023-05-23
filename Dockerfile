@@ -16,7 +16,7 @@ RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG
     if [[ ${EL_VER} == 7 ]]; then \
         yum -y install yum-plugin-priorities; \
     fi && \
-    if [[ ${EL_VER} == 8 ]]; then \
+    if [[ ${EL_VER} == al8 ]]; then \
         yum-config-manager --enable powertools; \
     fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
