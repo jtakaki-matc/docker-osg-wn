@@ -1,5 +1,5 @@
-# Default to EL8 builds (testing al8 build)
-ARG IMAGE_BASE=quay.io/centos/centos:stream8
+# Default to EL8 builds 
+ARG IMAGE_BASE=quay.io/almalinux/almalinux:8
 FROM $IMAGE_BASE
 
 ARG EL_VER=8
@@ -10,7 +10,7 @@ ARG BUILDDATE
 LABEL name="OSG ${OSG_RELEASE} Worker Node Client on EL ${EL_VER} + ${BASE_YUM_REPO} repos"
 LABEL build-date=${BUILDDATE}
 
-RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el${EL_VER}-release-latest.rpm \
+RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-al${EL_VER}-release-latest.rpm \
                    epel-release \
                    yum-utils && \
     if [[ ${EL_VER} == 7 ]]; then \
