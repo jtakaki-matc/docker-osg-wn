@@ -1,22 +1,23 @@
-# Default to EL8 builds 
-ARG IMAGE_BASE=docker.io/centos:centos7
+# Default to EL8 builds
+ARG IMAGE_BASE=quay.io/centos/centos:stream8
+
 FROM $IMAGE_BASE
 
-ARG OS_VER=EL7
+ARG EL_VER=8
 ARG OSG_RELEASE=3.6
 ARG BASE_YUM_REPO=release
 ARG BUILDDATE
 
-LABEL name="OSG ${OSG_RELEASE} Worker Node Client on  ${OS_VER} + ${BASE_YUM_REPO} repos"
+LABEL name="OSG ${OSG_RELEASE} Worker Node Client on EL ${EL_VER} + ${BASE_YUM_REPO} repos"
 LABEL build-date=${BUILDDATE}
 
-RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
+RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el${EL_VER}-release-latest.rpm \
                    epel-release \
                    yum-utils && \
-    if [[ ${OS_VER} == EL7 ]]; then \
+    if [[ ${EL_VER} == 7 ]]; then \
         yum -y install yum-plugin-priorities; \
     fi && \
-    if [[ ${OS_VER} == EL8 ]]; then \
+    if [[ ${EL_VER} == 8 ]]; then \
         yum-config-manager --enable powertools; \
     fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
