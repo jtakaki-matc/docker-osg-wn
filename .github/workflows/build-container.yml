@@ -60,7 +60,7 @@ jobs:
 
     - id: generate-image-base
       env:
-        DVER: ${{ matrix.os }}
+        os: ${{ matrix.os }}
       run: |
         case "$os" in
           9) image_base="quay.io/centos/centos:stream9";;
