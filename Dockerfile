@@ -1,5 +1,5 @@
 # Default to EL8 builds
-ARG IMAGE_BASE=quay.io/centos/centos:stream8
+ARG IMAGE_BASE=quay.io/almalinux/almalinux:8
 
 FROM $IMAGE_BASE
 
