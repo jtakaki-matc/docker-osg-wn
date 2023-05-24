@@ -2,7 +2,7 @@ name: Build and Push Docker image
 
 on:
   push:
-    branches: [ osg-alma8-testing ]
+    branches: [ master ]
   repository_dispatch:
     types:
       - dispatch-build
@@ -24,7 +24,8 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        dver: ['7', '8',]
+        dver: ['7', '8']
+        alos: ['al8']
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
     steps:
@@ -34,6 +35,7 @@ jobs:
       id: generate-tag-list
       env:
         EL_VER: ${{ matrix.dver }}
+        AL_VER: ${{matrix.alos}}
         BASE_YUM_REPO: ${{ matrix.repo }}
         OSG_RELEASE: ${{ matrix.series }}
         TIMESTAMP: ${{ needs.make-date-tag.outputs.dtag }}
@@ -42,17 +44,21 @@ jobs:
         tags=()
         for registry in hub.opensciencegrid.org docker.io; do
           tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO-el$EL_VER )
+          tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO-$AL_VER )
           if [[ $EL_VER == '8' ]]; then
             tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
             if [[ $BASE_YUM_REPO == 'release' ]]; then
               tags+=( $registry/$docker_repo:$OSG_RELEASE )
               [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:latest )
+              if [[ $AL_VER == 'al8' ]]; then
+                tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
             else
               [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:$BASE_YUM_REPO )
             fi
           fi
           if [[ $BASE_YUM_REPO == 'release' ]]; then
             tags+=( $registry/$docker_repo:$OSG_RELEASE-el$EL_VER )
+            tags+=( $registry/$docker_repo:$OSG_RELEASE-$AL_VER )
           fi
         done
         tag_list=$(IFS=,; echo "${tags[*]}")
@@ -64,12 +70,21 @@ jobs:
       run: |
         case "$DVER" in
           9) image_base="quay.io/centos/centos:stream9";;
-          8) image_base="quay.io/almalinux/almalinux:8";;
+          8) image_base="quay.io/centos/centos:stream8";;
           7) image_base="docker.io/centos:centos7";;
           *) echo "Unknown distro version: $DVER"; exit 1;;
         esac
         echo "::set-output name=imagebase::${image_base}"
 
+    - id: generate-al-image-base
+      env:
+        AVER: ${{matrix.alos}}
+      run: |
+        case "$AVER" in
+          al8) image_base="quay.io/almalinux/almalinux:8";;
+          *) echo "Unknown distro version: $DVER"; exit 1;;
+          esac
+        echo "::set-output name=imagebase::${image_base}"
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
@@ -80,14 +95,15 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     
 
-
     - name: Build and push Docker images
       uses: docker/build-push-action@v2.2.0
       with:
         push: true
         build-args: |
           EL_VER=${{ matrix.dver }}
+          AL_VER=${{matrix.alos}}
           IMAGE_BASE=${{ steps.generate-image-base.outputs.imagebase }}
+          AL_IMAGE_BASE=${{ steps.generate-al-image-base.outputs.imagebase }}
           BASE_YUM_REPO=${{ matrix.repo }}
           OSG_RELEASE=${{ matrix.series }}
           BUILDDATE=${{ needs.make-date-tag.outputs.dtag }}
