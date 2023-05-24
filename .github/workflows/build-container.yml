@@ -51,12 +51,12 @@ jobs:
                 tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
               else
               [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:$BASE_YUM_REPO )
+              fi
             fi
-          fi
-          if [[ $BASE_YUM_REPO == 'release' ]]; then
-            tags+=( $registry/$docker_repo:$OSG_RELEASE-$OS_VER )
-          fi
-        done
+            if [[ $BASE_YUM_REPO == 'release' ]]; then
+              tags+=( $registry/$docker_repo:$OSG_RELEASE-$OS_VER )
+            fi
+          done
         tag_list=$(IFS=,; echo "${tags[*]}")
         echo "::set-output name=taglist::$tag_list"
     - id: generate-image-base
