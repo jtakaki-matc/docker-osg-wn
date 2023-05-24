@@ -47,7 +47,9 @@ jobs:
             if [[ $BASE_YUM_REPO == 'release' ]]; then
               tags+=( $registry/$docker_repo:$OSG_RELEASE )
               [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:latest )
-            else
+              if [[ $OS_VER == 'al8' ]]; then
+            tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
+              else
               [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:$BASE_YUM_REPO )
             fi
           fi

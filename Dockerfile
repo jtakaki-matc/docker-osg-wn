@@ -13,7 +13,7 @@ LABEL build-date=${BUILDDATE}
 RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
                    epel-release \
                    yum-utils && \
-    if [[ ${OS_VER} == el7 ]]; then \
+    if [[ ${OS_VER} == el8 ]]; then \
         yum -y install yum-plugin-priorities; \
     fi && \
     if [[ ${OS_VER} == el8 ]]; then \
