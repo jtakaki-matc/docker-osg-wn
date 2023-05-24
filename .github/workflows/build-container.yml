@@ -65,7 +65,7 @@ jobs:
           el9) image_base="quay.io/centos/centos:stream9";;
           el8) image_base="quay.io/centos/centos:stream8";;
           el7) image_base="docker.io/centos:centos7";;
-          al8) image_base="quay.io/almalinux/almalinux:8"
+          al8) image_base="quay.io/almalinux/almalinux:8";;
           *) echo "Unknown distro version: $DVER"; exit 1;;
         esac
         echo "::set-output name=imagebase::${image_base}"
