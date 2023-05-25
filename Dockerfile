@@ -14,7 +14,7 @@ RUN if [[ ${OS_VER} == al8 ]]; then \
         yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el8-release-latest.rpm; \
                        epel-release \
                        yum-utils && \
-    else \
+    elif \
         yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm; \
                        epel-release \
                        yum-utils && \
