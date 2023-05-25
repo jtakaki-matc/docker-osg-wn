@@ -56,9 +56,10 @@ jobs:
             if [[ $BASE_YUM_REPO == 'release' ]]; then
               tags+=( $registry/$docker_repo:$OSG_RELEASE-$OS_VER )
             fi
-          done
-          tag_list=$(IFS=,; echo "${tags[*]}")
-          echo "::set-output name=taglist::$tag_list"
+          fi
+        done
+        tag_list=$(IFS=,; echo "${tags[*]}")
+        echo "::set-output name=taglist::$tag_list"
     - id: generate-image-base
       env:
         DVER: ${{ matrix.dver }}
