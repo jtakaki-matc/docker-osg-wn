@@ -10,19 +10,17 @@ ARG BUILDDATE
 LABEL name="OSG ${OSG_RELEASE} Worker Node Client on ${OS_VER} + ${BASE_YUM_REPO} repos"
 LABEL build-date=${BUILDDATE}
 
-RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
-                   epel-release \
-                   yum-utils && \
+RUN yum -y install epel-release yum-utils && \
+    if [[ ${OS_VER} == al8 ]]; then \
+        yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el8-release-latest.rpm; \
+    else \
+        yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm; \
+    fi && \
     if [[ ${OS_VER} == el8 ]]; then \
         yum -y install yum-plugin-priorities; \
     fi && \
     if [[ ${OS_VER} == el8 ]]; then \
         yum-config-manager --enable powertools; \
-    fi && \
-    if [[ ${OS_VER} == al8 ]]; then \
-        yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el8-release-latest.rpm \
-                   epel-release \
-                   yum-utils && \
     fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
         yum-config-manager --enable osg-development; \
