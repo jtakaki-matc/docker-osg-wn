@@ -42,23 +42,23 @@ jobs:
         tags=()
         for registry in hub.opensciencegrid.org docker.io; do
           tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO-$OS_VER )
-          if [[ $OS_VER == 'el8' ]]; then
+          if [[ $OS_VER == '8' ]]; then
             tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
-            if [[ $BASE_YUM_REPO == 'release' ]]; then
-              tags+=( $registry/$docker_repo:$OSG_RELEASE )
-              [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:latest )
-              if [[ $OS_VER == 'al8' ]]; then
-                tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
+            if [[ $OS_VER == 'al8' ]]; then
+              tags+=( $registry/$docker_repo:$OSG_RELEASE-$BASE_YUM_REPO )
+              if [[ $BASE_YUM_REPO == 'release' ]]; then
+                tags+=( $registry/$docker_repo:$OSG_RELEASE )
+                [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:latest )
               else
-              [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:$BASE_YUM_REPO )
+                [[ $OSG_RELEASE == '3.6' ]] && tags+=( $registry/$docker_repo:$BASE_YUM_REPO )
               fi
             fi
             if [[ $BASE_YUM_REPO == 'release' ]]; then
               tags+=( $registry/$docker_repo:$OSG_RELEASE-$OS_VER )
-          fi
-        done
-        tag_list=$(IFS=,; echo "${tags[*]}")
-        echo "::set-output name=taglist::$tag_list"
+            fi
+          done
+          tag_list=$(IFS=,; echo "${tags[*]}")
+          echo "::set-output name=taglist::$tag_list"
     - id: generate-image-base
       env:
         DVER: ${{ matrix.dver }}
