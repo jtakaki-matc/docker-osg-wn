@@ -10,15 +10,12 @@ ARG BUILDDATE
 LABEL name="OSG ${OSG_RELEASE} Worker Node Client on ${OS_VER} + ${BASE_YUM_REPO} repos"
 LABEL build-date=${BUILDDATE}
 
-RUN RUN if [[ ${OS_VER} == al8 ]]; then \
-        yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el8-release-latest.rpm; \
-                       epel-release \
-                       yum-utils && \
-        fi
-
 RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
                    epel-release \
                    yum-utils && \
+    if [[ ${OS_VER} == al8 ]]; then \
+        ${OS_VER} == el8; \
+    fi && \
     if [[ ${OS_VER} == el8 ]]; then \
         yum -y install yum-plugin-priorities; \
     fi && \
