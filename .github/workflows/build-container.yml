@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        dver: ['el7', 'el8', 'al8']
+        dver: ['al8', 'el8', 'el7']
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
     steps:
