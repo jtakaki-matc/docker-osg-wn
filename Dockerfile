@@ -21,10 +21,9 @@ RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG
     fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
         yum-config-manager --enable osg-development; \
-    if [[ ${OSG_RELEASE} == "3.5" ]]; then \
-        yum-config-manager --enable osg-upcoming-development; \
-    fi; \
-    fi && \
+        if [[ ${OSG_RELEASE} == "3.5" ]]; then \
+            yum-config-manager --enable osg-upcoming-development; \
+        fi; \
     elif [[ ${BASE_YUM_REPO} != "release" ]]; then \
         yum-config-manager --enable osg-${BASE_YUM_REPO}; \
         if [[ ${OSG_RELEASE} == "3.5" ]]; then \
