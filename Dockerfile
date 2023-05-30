@@ -20,7 +20,7 @@ RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG
     if [[ ${OS_VER} == el8 ]]; then \
         yum-config-manager --enable powertools; \
     fi && \
-    if [[ ${OS_VER} == el7 ]]; then \
+    if [[ ${OS_VER} == al8 ]]; then \
         [[${OS_VER} == el8]]; \
     fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
