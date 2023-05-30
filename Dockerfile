@@ -11,7 +11,7 @@ ARG BUILDDATE
 LABEL name="OSG ${OSG_RELEASE} Worker Node Client on EL ${OS_VER} + ${BASE_YUM_REPO} repos"
 LABEL build-date=${BUILDDATE}
 
-RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-el${OS_VER}-release-latest.rpm \
+RUN yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
                    epel-release \
                    yum-utils && \
     if [[ ${OS_VER} == 7 ]]; then \
