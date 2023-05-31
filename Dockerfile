@@ -1,9 +1,8 @@
-# Default to EL8 builds
-ARG IMAGE_BASE=quay.io/centos/centos:stream8
-
+# Default to AL8 builds
+ARG IMAGE_BASE=quay.io/almalinux/almalinux:8
 FROM $IMAGE_BASE
 
-ARG OS_VER=8
+ARG OS_VER=al8
 ARG OSG_RELEASE=3.6
 ARG BASE_YUM_REPO=release
 ARG BUILDDATE
