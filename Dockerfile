@@ -11,7 +11,7 @@ LABEL name="OSG ${OSG_RELEASE} Worker Node Client on EL ${OS_VER} + ${BASE_YUM_R
 LABEL build-date=${BUILDDATE}
 
 RUN if [[ "${OS_VER}" == "al8" ]]; then \
-        [[${OS_VER}="el8"]]; \
+        OS_VER="el8"; \
     fi && \
     yum -y install https://repo.opensciencegrid.org/osg/${OSG_RELEASE}/osg-${OSG_RELEASE}-${OS_VER}-release-latest.rpm \
                    epel-release \
