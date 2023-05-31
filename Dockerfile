@@ -22,9 +22,6 @@ RUN if [[ "${OS_VER}" == "al8" ]]; then \
     if [[ ${OS_VER} == el8 ]]; then \
         yum-config-manager --enable powertools; \
     fi && \
-    if [[ ${OS_VER} == al8 ]]; then \
-        [[${OS_VER} == el8]]; \
-    fi && \
     if [[ ${BASE_YUM_REPO} == "devel" ]]; then \
         yum-config-manager --enable osg-development; \
         if [[ ${OSG_RELEASE} == "3.5" ]]; then \
