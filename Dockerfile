@@ -1,4 +1,4 @@
-# Default to AL8 builds #test update
+# Default to AL8 builds 
 ARG IMAGE_BASE=quay.io/almalinux/almalinux:8
 FROM $IMAGE_BASE
 
