@@ -23,15 +23,12 @@ jobs:
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
         include:
-          - dver: ['el7', 'el8', 'al8']
-            repo: ['devel', 'testing', 'release']
-            series: ['3.6']
-            harbor_url: hub.opensciencegrid.org
-            harbor_username: $harbor_username
-            harbor_password: $harbor_password
-            docker_url: docker.io
-            docker_username: $docker_username
-            docker_password: $docker_password
+            - harbor_url: hub.opensciencegrid.org
+            - harbor_username: echo $harbor_username
+            - harbor_password: echo $harbor_password
+            - docker_url: docker.io
+            - docker_username: echo $docker_username
+            - docker_password: echo $docker_password
 
     steps:
       - id: custom-image-name
