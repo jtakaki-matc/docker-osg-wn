@@ -11,6 +11,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      harbor_username: ${{ secrets.OSG_HARBOR_ROBOT_USER }}
+      harbor_password: ${{ secrets.OSG_HARBOR_ROBOT_PASSWORD }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      docker_password: ${{ secrets.DOCKER_PASSWORD }}
     strategy:
       fail-fast: False
       matrix:
@@ -20,12 +25,12 @@ jobs:
         registry: ['harbor', 'docker']
         include:
           - harbor_url: hub.opensciencegrid.org
-          - harbor_username: ${{ secrets.OSG_HARBOR_ROBOT_USER }}
-          - harbor_password: ${{ secrets.OSG_HARBOR_ROBOT_PASSWORD }}
+          - harbor_username: $harbor_username
+          - harbor_password: $harbor_password
             registry: harbor
           - docker_url: docker.io
-          - docker_username: ${{ secrets.DOCKER_USERNAME }}
-          - docker_password: ${{ secrets.DOCKER_PASSWORD }}
+          - docker_username: $docker_username
+          - docker_password: $docker_password
             registry: docker
     steps:
       - id: custom-image-name
