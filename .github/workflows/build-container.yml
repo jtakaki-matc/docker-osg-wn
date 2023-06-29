@@ -22,13 +22,13 @@ jobs:
         dver: ['el7', 'el8', 'al8']
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
-        include:
-            - harbor_url: hub.opensciencegrid.org
-            - harbor_username: echo $harbor_username
-            - harbor_password: echo $harbor_password
-            - docker_url: docker.io
-            - docker_username: echo $docker_username
-            - docker_password: echo $docker_password
+        registry:
+          - url: hub.opensciencegrid.org
+            harbor_user: $harbor_username
+            harbor_pass: $harbor_pasword
+          - url: docker.io
+            docker_user: $docker_username
+            docker_pass: $docker_pass
 
     steps:
       - id: custom-image-name
@@ -50,9 +50,7 @@ jobs:
           osg_repo: ${{ matrix.repo }}
           base_os: ${{ matrix.dver }}
           output_image: ${{ steps.custom-image-name.outputs.output_image }}
-          registry_url: ${{matrix.registry}}
-          registry_user: ${{matrix.registry}}
-          registry_pass: ${{matrix.registry}}
+          registry: ${{matrix.registry}}
 
       - name: Push to OSG Harbor
         if: >-
