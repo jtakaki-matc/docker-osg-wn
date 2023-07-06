@@ -23,12 +23,10 @@ jobs:
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
         registry:
-          - dver: ['el7', 'el8', 'al8']
-            url: hub.opensciencegrid.org
+          - url: hub.opensciencegrid.org
             harbor_user: $harbor_username
             harbor_pass: $harbor_pasword
-          - dver: ['el7', 'el8', 'al8']
-            url: docker.io
+          - url: docker.io
             docker_user: $docker_username
             docker_pass: $docker_pass
 
