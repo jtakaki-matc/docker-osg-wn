@@ -38,7 +38,6 @@ jobs:
           osg_repo: ${{ matrix.repo }}
           base_os: ${{ matrix.dver }}
           output_image: ${{ steps.custom-image-name.outputs.output_image }}
-          push_image: 
   push:
     runs-on: ubuntu-latest
     if: >-
