@@ -63,6 +63,7 @@ jobs:
       - uses: opensciencegrid/push-container-action@v0.8.0
         with:
           repo: ${{ matrix.repo }}
+          osg_series: ${{ matrix.osg_series }}
           registry_url: ${{ matrix.registry.url }}
           registry_user: ${{ secrets[matrix.registry.username] }}
           registry_pass: ${{ secrets[matrix.registry.password] }}
