@@ -11,24 +11,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      harbor_username: ${{ secrets.OSG_HARBOR_ROBOT_USER }}
-      harbor_password: ${{ secrets.OSG_HARBOR_ROBOT_PASSWORD }}
-      docker_username: ${{ secrets.DOCKER_USERNAME }}
-      docker_password: ${{ secrets.DOCKER_PASSWORD }}
     strategy:
       fail-fast: False
       matrix:
         dver: ['el7', 'el8', 'al8']
         repo: ['devel', 'testing', 'release']
         series: ['3.6']
-        registry:
-          - url: hub.opensciencegrid.org
-            harbor_user: $harbor_username
-            harbor_pass: $harbor_pasword
-          - url: docker.io
-            docker_user: $docker_username
-            docker_pass: $docker_pass
+        include:
+          - dver: el7
+            harborurl: hub.opensciencegrid.org
+            harbor_user: HARBOR_USER
+            harbor_pass: HARBOR_PASS
+            dockerurl: docker.io
+            docker_user: DOCKER_USER
+            docker_pass: DOCKER_PASS
 
     steps:
       - id: custom-image-name
@@ -49,6 +45,10 @@ jobs:
           osg_series: ${{ matrix.series }}
           osg_repo: ${{ matrix.repo }}
           base_os: ${{ matrix.dver }}
+          registry_url: ${{matrix.harborurl}}
+          registry_user: ${{secrets[matrix.harbor_user]}}
+          registry_pass: ${{secrets[matrix.harbor_pass]}}
+
           output_image: ${{ steps.custom-image-name.outputs.output_image }}
 
       - name: Push to OSG Harbor
